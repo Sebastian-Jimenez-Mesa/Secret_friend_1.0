@@ -16,4 +16,32 @@ body{
 h1{
     text-align: center;
     color: #FF4081;
+    margin-top: 70px;
+    font-size: 50px;
+    letter-spacing: 2px;
+}
+
+.titulos{
+    margin-top: 20px;
+    color: #ffffff;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.titulos h2{
+    font-size: 35px;
+}
+
+.titulos p{
+    font-size: 20px;
+}
+
+.imgHome{
+    text-align: center;
+}
+
+.imgHome img{
+    width: 900px;
+    height: auto;
+    margin-top: 15px;
 }

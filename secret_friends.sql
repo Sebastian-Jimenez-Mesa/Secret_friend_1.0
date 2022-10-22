@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-10-2022 a las 20:46:07
+-- Tiempo de generación: 22-10-2022 a las 21:25:43
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -24,12 +24,24 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `amigos`
+--
+
+CREATE TABLE `amigos` (
+  `id` int(10) NOT NULL,
+  `persona_1` int(10) NOT NULL,
+  `persona_2` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `grupos`
 --
 
 CREATE TABLE `grupos` (
   `id` int(10) NOT NULL,
-  `nombre` varchar(50) DEFAULT NULL
+  `nombre` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -58,7 +70,7 @@ INSERT INTO `grupos` (`id`, `nombre`) VALUES
 
 CREATE TABLE `roles` (
   `id` int(10) NOT NULL,
-  `rol` varchar(50) DEFAULT NULL
+  `rol` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -77,19 +89,27 @@ INSERT INTO `roles` (`id`, `rol`) VALUES
 
 CREATE TABLE `usuarios` (
   `id` int(10) NOT NULL,
-  `nombre` varchar(50) DEFAULT NULL,
-  `apellidos` varchar(50) DEFAULT NULL,
-  `sexo` varchar(10) DEFAULT NULL,
-  `gustos` varchar(250) DEFAULT NULL,
-  `disgustos` varchar(250) DEFAULT NULL,
-  `alergias` varchar(250) DEFAULT NULL,
-  `id_grupo` int(10) DEFAULT NULL,
-  `id_rol` int(10) DEFAULT NULL
+  `nombre` varchar(50) NOT NULL,
+  `apellidos` varchar(50) NOT NULL,
+  `sexo` varchar(10) NOT NULL,
+  `gustos` varchar(250) NOT NULL,
+  `disgustos` varchar(250) NOT NULL,
+  `alergias` varchar(250) NOT NULL,
+  `id_grupo` int(10) NOT NULL,
+  `id_rol` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `amigos`
+--
+ALTER TABLE `amigos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `persona_1` (`persona_1`),
+  ADD KEY `persona_2` (`persona_2`);
 
 --
 -- Indices de la tabla `grupos`
@@ -116,6 +136,12 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `amigos`
+--
+ALTER TABLE `amigos`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `grupos`
 --
 ALTER TABLE `grupos`
@@ -136,6 +162,13 @@ ALTER TABLE `usuarios`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `amigos`
+--
+ALTER TABLE `amigos`
+  ADD CONSTRAINT `amigos_ibfk_1` FOREIGN KEY (`persona_1`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `amigos_ibfk_2` FOREIGN KEY (`persona_2`) REFERENCES `usuarios` (`id`);
 
 --
 -- Filtros para la tabla `usuarios`
