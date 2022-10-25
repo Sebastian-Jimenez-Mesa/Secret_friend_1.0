@@ -2,8 +2,10 @@ const express = require('express')
 const app = express();
 
 const rutaMain = require('./routers/main');
+const rutaUsers = require("./routers/users")
 
 app.use('/', rutaMain );
+app.use("/registro", rutaUsers)
 
 /* ---- IMPLEMENTANDO MOTOR DE PLANTILLAS ----- */
 app.set("view engine", "ejs");
