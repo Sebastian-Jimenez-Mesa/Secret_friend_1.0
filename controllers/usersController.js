@@ -4,4 +4,12 @@ const usersController = {
     }
 }
 
+    
+        // nombre: req.body.nombre,
+        // apellidos: req.body.apellidos,
+        // sexo: req.body.genero,
+        // grupo: req.body.grupo,
+        // gustos: req.body.gustos,
+        // alergias: req.body.alergias,
+        
 module.exports = usersController;
