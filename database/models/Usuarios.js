@@ -37,13 +37,12 @@ module.exports = (sequelize, dataTypes) =>{
         },
         id_grupo:{
             type: dataTypes.INTEGER,
-            foreinKey: true,
+            foreignKey: true,
             allowNull: false
         },
         id_rol:{
             type: dataTypes.INTEGER,
-            foreinKey: true,
-            allowNull: false
+            foreignKey: true,
         },
 
     };
@@ -53,10 +52,10 @@ module.exports = (sequelize, dataTypes) =>{
         timestamps: false
     };
 
-    const Usuarios = sequelize.define(alias,cols,config);
+    const Usuarios = sequelize.define(alias, cols, config);
 
     Usuarios.associate = function(models){
-        Usuarios.hasMany(models.grupos, {
+        Usuarios.belongsTo(models.grupos, {
             as:'grupos',
             foreignKey: 'id_grupo'
         })
@@ -65,17 +64,6 @@ module.exports = (sequelize, dataTypes) =>{
             as:'roles',
             foreignKey: 'id_rol'
         })
-
-        Usuarios.hasMany(models.amigos, {
-            as:'amigos',
-            foreignKey: 'persona_1'
-        })
-
-        Usuarios.hasMany(models.amigos, {
-            as:'amigos',
-            foreignKey: 'persona_2'
-        })
-
 
     }
 

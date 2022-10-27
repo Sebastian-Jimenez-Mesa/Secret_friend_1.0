@@ -27,7 +27,7 @@ module.exports = (sequelize, dataTypes) =>{
     const Grupos = sequelize.define(alias,cols,config);
 
     Grupos.associate = function(models){
-        Grupos.belongsTo(models.usuarios, {
+        Grupos.hasMany(models.usuarios, {
             as:'usuarios',
             foreignKey: 'id_grupo'
         })

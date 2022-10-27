@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="/img/web-design.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/registro.css">
-    <title>Document</title>
+    <title>Registro</title>
 </head>
 <body>
   <h1 class="">Formulario de registro</h1>
@@ -15,88 +15,81 @@
         
 
         <div class="container cajaFormulario mt-5">
-            <form class="row g-3 needs-validation" novalidate>
-                <div class="col-md-3">
-                  <label for="validationCustom01" class="form-label">Nombre</label>
-                  <input type="text" class="form-control" id="validationCustom01" name="nombre" required>
+            <form action="/users/registro" method="POST" class="row g-3 needs-validation" novalidate>
+              <div class="col-md-3">
+                <label for="validationCustom01" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="validationCustom01" name="nombre" required>
+                <div class="invalid-feedback">
+                  Debes escribir tu nombre
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="validationCustom02" class="form-label">Apellidos</label>
+                <input type="text" class="form-control" id="validationCustom02"  name="apellidos" required>
+                <div class="invalid-feedback">
+                  Debes escribir tus apellidos
+                </div>
+              </div>
+              <div class="col-md-3">
+                  <label for="validationCustom04" class="form-label">Género</label>
+                  <select class="form-select" id="validationCustom04"  name="genero" required>
+                    <option selected disabled value="">Selecciona</option>
+                    <option>Hombre</option>
+                    <option>Mujer</option>
+                    <option>Otro</option>
+                  </select>
                   <div class="invalid-feedback">
-                    Debes escribir tu nombre
+                    Debes seleccionar tu género
                   </div>
-                </div>
-                <div class="col-md-3">
-                  <label for="validationCustom02" class="form-label">Apellidos</label>
-                  <input type="text" class="form-control" id="validationCustom02"  name="apellidos" required>
+              </div>
+              <div class="col-md-3">
+                  <label for="validationCustom04" class="form-label">Grupo</label>
+                  <select class="form-select" id="validationCustom04"  name="grupo" required>
+                    <option selected disabled value="">Selecciona</option>
+                    <% for (let i = 0; i < grupos.length; i++) { %>
+                      <option value="<%= grupos[i].id %> "><%= grupos[i].nombre %></option>
+                    <% } %>  
+                    
+                  </select>
                   <div class="invalid-feedback">
-                    Debes escribir tus apellidos
+                    ¿A qué grupo perteneces?
                   </div>
+              </div>
+              <div class="col-md-12">
+                <label for="validationCustom03" class="form-label">Me encanta</label>
+                <textarea type="text" class="form-control" id="validationCustom03"  name="gustos" required></textarea>
+                <div class="invalid-feedback">
+                  Cuéntanos que te gusta
                 </div>
-                <div class="col-md-3">
-                    <label for="validationCustom04" class="form-label">Género</label>
-                    <select class="form-select" id="validationCustom04"  name="genero" required>
-                      <option selected disabled value="">Selecciona</option>
-                      <option>Hombre</option>
-                      <option>Mujer</option>
-                      <option>Otro</option>
-                    </select>
-                    <div class="invalid-feedback">
-                      Debes seleccionar tu género
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <label for="validationCustom04" class="form-label">Grupo</label>
-                    <select class="form-select" id="validationCustom04"  name="grupo" required>
-                      <option selected disabled value="">Selecciona</option>
-                      <option>Nuevos negocios</option>
-                      <option>Marcas</option>
-                      <option>Mercadeo</option>
-                      <option>Abastecimiento</option>
-                      <option>Comercial</option>
-                      <option>Manufacturas</option>
-                      <option>Industrial</option>
-                      <option>Logística</option>
-                      <option>Tecnología</option>
-                      <option>Financiera</option>
-                      <option>DOS</option>
-                      <option>Jurídica</option>
-                    </select>
-                    <div class="invalid-feedback">
-                      ¿A qué grupo perteneces?
-                    </div>
-                </div>
-                <div class="col-md-12">
-                  <label for="validationCustom03" class="form-label">Me encanta</label>
-                  <textarea type="text" class="form-control" id="validationCustom03"  name="gustos" required></textarea>
+              </div>
+              <div class="col-md-12">
+                  <label for="validationCustom03" class="form-label">No me gusta</label>
+                  <textarea type="text" class="form-control" id="validationCustom03"   name="disgustos" required></textarea>
                   <div class="invalid-feedback">
-                    Cuéntanos que te gusta
+                    Cuéntanos que no te gusta
+              </div>
+                </div><div class="col-md-12">
+                  <label for="validationCustom03" class="form-label">Me produce alergia</label>
+                  <textarea type="text" class="form-control" id="validationCustom03"  name="alergias" required></textarea>
+                  <div class="invalid-feedback">
+                    Cuéntanos que te produce alergias
+                  </div>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                  <label class="form-check-label" for="invalidCheck">
+                    Acepto términos y condiciones
+                  </label>
+                  <div class="invalid-feedback">
+                   Debes aceptar los términos
                   </div>
                 </div>
-                <div class="col-md-12">
-                    <label for="validationCustom03" class="form-label">No me gusta</label>
-                    <textarea type="text" class="form-control" id="validationCustom03"   name="disgustos" required></textarea>
-                    <div class="invalid-feedback">
-                      Cuéntanos que no te gusta
-                </div>
-                  </div><div class="col-md-12">
-                    <label for="validationCustom03" class="form-label">Me produce alergia</label>
-                    <textarea type="text" class="form-control" id="validationCustom03"  name="alergias" required></textarea>
-                    <div class="invalid-feedback">
-                      Cuéntanos que te produce alergias
-                    </div>
-                </div>
-                <div class="col-12">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                    <label class="form-check-label" for="invalidCheck">
-                      Acepto términos y condiciones
-                    </label>
-                    <div class="invalid-feedback">
-                     Debes aceptar los términos
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 cajaBoton">
-                  <input class="botonRegistro" type="submit" value="Registrarme">
-                </div>
+              </div>
+              <div class="col-12 cajaBoton">
+                <input class="botonRegistro" type="submit" value="Registrarme">
+              </div>
+
               </form>
         </div>
     </main>
