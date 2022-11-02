@@ -1,5 +1,13 @@
+const http = require("http")
 const express = require('express')
+const socketio = require("socket.io")
 const app = express();
+const server = http.createServer(app);
+//const io = socketio.listen(server);
+
+
+app.set("port",process.env.PORT || 3000);
+
 const rutaMain = require('./routers/main');
 const rutaUsers = require("./routers/users")
 
@@ -13,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use('/', rutaMain );
-app.use("/", rutaUsers);
+app.use("/users", rutaUsers);
 
 /* ---- IMPLEMENTANDO MOTOR DE PLANTILLAS ----- */
 app.set("view engine", "ejs");
@@ -25,7 +33,15 @@ app.use(express.json());
 
 app.use(express.static('./public'));
 
-app.listen(3000, ()=>
-    console.log('servidor activo en puerto 3000')
-);
+server.listen(app.get("port"),()=>{
+    console.log("Servidor corriendo e este puerto" + app.get("port"));
+});
+
+
+
+
+
+
+
+
 

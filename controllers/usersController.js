@@ -31,8 +31,21 @@ const usersController = {
 
         })
 
-        res.send("usuario registrado")
-    }
+        //res.send("usuario registrado")
+        res.redirect('/users/formularioJugadores')
+    },
+    jugadores: (req, res) => {
+
+        db.grupos.findAll({
+            include: {
+                all: true,
+                nested: true
+            }
+        }).then(function(grupos){
+            res.render('formularioJugadores',{grupos})
+        })
+}
+
 }
 
 module.exports = usersController;

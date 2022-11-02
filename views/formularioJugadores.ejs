@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empieza a jugar</title>
+<link rel="icon" type="image/x-icon" href="/img/web-design.png">
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/estilos.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+   
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.4/dist/sweetalert2.all.min.js"></script> 
+<script src="/js/socket.io.js"></script>
+
+</head>
+
+<body>
+    <!--CSS-->
+    <style>
+
+        .contenedor{
+            padding: 30px;
+        }
+
+        #btn-group-encabezado .btn{
+            width: 250px;
+        }
+
+    </style>
+
+    <!--HTML-->
+
+    <div class="contenedor">
+        <div class="text-center">
+            <div class="btn btn-group" id="btn-group-encabezado">
+            <div class="btn btn-success" onclick="nuevoJugador()">
+                <i class="fas fa-user-plus"></i>Nuevo jugador
+            </div>
+            <div class="btn btn-danger" onclick="limpiarTablero()">
+                <i class="fas fa-users-slash"></i>Limpiar tablero
+        </div>
+        <div class="btn btn-primary">
+            <i class="fas fa-dice"></i>Jugar
+            </div>
+        </div>
+    </div>
+    <br>
+    <table class="table table-light table-striped">
+        <tbody id="tableroJugadores">
+        </tbody>
+    </table>
+<!-- </br> -->
+</div>
+
+    <!--JS-->
+    <script>
+        let socket = io()//Suficiente para abrir comunicacion entre el cliente y el servidor
+
+
+        //La base de datos en el cliente
+       let jugadores = [
+            ["Erika Polo","ericapolo10@hotmail.com"],
+            ["Erika Polo","ericapolo19@gmail.com"],
+            ["Sebastian Jimenez","sebastianj@hotmail.com"]
+        ]
+
+        actualizarTabla()
+
+        function actualizarTabla(){
+            let html = `
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Correo
+                </th>
+                <th>
+                    Opciones
+                </th>
+
+               </tr>`
+               for (let i = 0; i < jugadores.length; i++){
+                const j = jugadores[i];
+                html +=`
+                <tr>
+                    <td>
+                        ${j[0]}
+                    </td>
+                    <td>
+                        ${j[1]}
+                    </td>
+                    <td style="width:10%,">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-warning" onclick="editarJugador(${i})">
+                                Editar
+                            </button>
+                            <button type="button" class="btn btn-danger" onclick="borrarJugador(${i})">
+                                Eliminar
+                            </button>
+                        </div
+                    </td>
+                 </tr>   
+                `
+               }   
+               document.getElementById("tableroJugadores").innerHTML = html
+        }
+        async function nuevojugador(){
+                let box = await swal.fire({
+                   showCancelButton: true,
+                    title: `Nuevo Jugador`,
+                    html: `
+                    <input type="text" placeholder="Nombre" class="swal2-input" id="box-nombre">
+                    <input type="text" placeholder="Correo" class="swal2-input" id="box-correo">
+                    `,
+                    preConfirm:() => {
+                        let nombre = document.getElementById('box-nombre').value
+                        let correo = document.getElementById('box-correo').value
+                         //Comprobar si el jugador ya existe
+                        if (buscarJugadorRepetido(nombre)){
+                            Swal.showValidationMessage(
+                        "el jugador ya esta en juego, escoja otro nombre"
+                        )
+                        return false;
+                    }
+                    if (!correo){
+                        Swal.showValidationMessage(
+                    'se necesita un correo para el jugador'
+                   )
+                    return false;
+                 }
+                    return [nombre, correo]
+                }
+             })
+            if (box.isConfirmed) {
+            jugadores.push(box.value)
+             actualizarTabla() 
+         }
+       }
+       /*
+       la verificacion de un jugador repetido se debe hacer con el nombre o con el correo
+       */
+       function buscarJugadorRepetido(nombre){
+            for (let i = 0; i < jugadores.length; i++) {
+            const j = jugadores[i];
+            if (j[0].toLowerCase()==nombre.toLowerCase()){
+            return true  //el jugador ya existe
+        }
+    }
+    return false //el jugador no existe
+    
+}
+async function editarjugador(i){
+    let box = await swal.fire({
+        showCancelButton: true,
+        title: `Editar Jugador`,
+        html:`
+        <input type="text" placeholder="Nombre" class="swal2-input" id="box-nombre" value="${jugadores[i][0]}">,
+        <input type="text" placeholder="Correo" class="swal2-input" id="box-correo"value="${jugadores[i][1]}>,
+        `,
+        preConfirm: ()=>{
+            let nombre = document.getElementById('box-nombre').value
+            let correo = document.getElementById('box-correo').value
+           //Comprobar si el jugador ya existe
+
+           if (buscarJugadorRepetido(nombre, i)) {
+            Swal.showValidationMessage(
+                'El jugador ya está en juego, escoja otro nombre'
+            )
+            return false;
+        }
+
+            if (!nombre) {
+                Swal.showValidationMessage(
+                    'se necesita un nombre para el jugador'
+                )
+                return false;
+            }
+            if (!correo){
+                Swal.showValidationMessage(
+                    'se necesita un correo para el jugador'
+                )
+                return false;
+            }
+            return [nombre, correo]
+        }
+    
+    })
+    if (box.isConfirmed) {
+        jugadores[i]=box.value
+        actualizarTabla()
+
+    }
+}
+function buscarJugadorRepetido(nombre, ignorarIndice = -1){
+    for (let i = 0; i < jugadores.length; i++) {
+        if (i==ignorarIndice){
+            continue
+        }
+        const j = jugadores[i];
+        if (j[0].tolowerCase()===nombre.tolowerCase()){
+            return true //el jugador ya existe
+
+        }
+    }
+    return false //el jugador no existe
+
+
+}
+
+
+            async function limpiarTablero(){
+            let box = await swal.fire({
+                showCancelButton: true,
+                title: "Accion no reversible",
+                text: "¿Eliminar todos los jugadores?"
+            })
+            if(box.isConfirmed){
+                jugadores = []
+                actualizarTabla()
+            }
+        }
+            async function borrarJugador(i){
+            let box = await swal.fire({
+                showCancelButton:true,
+                title: "Accion no reversible",
+                text: `¿Eliminar a ${jugadores[i][0]}?`
+            })  
+            if (box.isConfirmed){
+                jugadores.splice(i,1)
+                actualizarTabla()
+        }
+
+    }
+    function jugar(){
+    let parejas = []
+    for (const v of jugadores){
+        parejas.push(v)
+    }
+    while(true){
+        finalizar = true
+        for (let i = 0; i < jugadores.length; i++) {
+            const j = jugadores[i];
+            if (j == parejas[i]){
+                parejas.sort(()=>Math.random() - 0.5)
+                finalizar = false;
+                if (jugadores.length == 1){
+                    //prueba de algoritmo
+                    finalizar = true
+                }
+                break
+            }
+         }
+         if (finalizar){
+            break
+         }
+    }
+    //enviar la partida al servidor
+    socket.emit("enviar correos", jugadores, parejas)
+}
+
+
+    </script>
+    </body>
+    </html>
