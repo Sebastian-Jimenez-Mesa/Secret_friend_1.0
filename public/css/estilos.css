@@ -74,6 +74,96 @@ h1{
     font-weight: 600;
 }
 
+/* ------------ TABLERO DE JUEGO ------------ */
+
+.btn.btn-success {
+    width: 200px;
+    height: 50px;
+    border-radius: 50px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    background-color: transparent;
+    border: 2px solid #463f93;
+    color: #463f93;
+    transition: 0.1s ease-in;
+    font-weight: 600;
+    padding: 12px 40px 12px 40px;
+    text-decoration: none;
+}
+
+.btn.btn-success:active {
+    background-color: #463f93;
+    color: #ffffff;
+    font-weight: 600;
+    border: 2px solid #463f93;
+}
+
+.btn.btn-danger {
+    width: 200px;
+    height: 50px;
+    border-radius: 50px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    background-color: transparent;
+    border: 2px solid #463f93;
+    color: #463f93;
+    transition: 0.1s ease-in;
+    font-weight: 600;
+    padding: 12px 40px 12px 40px;
+    text-decoration: none;   
+}
+
+.btn.btn-danger:active {
+    background-color: #463f93;
+    color: #ffffff;
+    font-weight: 600;
+    border: 2px solid #463f93;
+}
+
+.btn.btn-primary {
+    width: 200px;
+    height: 50px;
+    border-radius: 50px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    background-color: transparent;
+    border: 2px solid #463f93;
+    color: #463f93;
+    transition: 0.1s ease-in;
+    font-weight: 600;
+    padding: 12px 40px 12px 40px;
+    text-decoration: none;
+}
+
+.btn.btn-primary:active {
+    background-color: #463f93;
+    color: #ffffff;
+    font-weight: 600;
+    border: 2px solid #463f93;
+}
+
+.btn.btn-warning {
+    height: 50px;
+    border-radius: 50px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    background-color: transparent;
+    border: 2px solid #463f93;
+    color: #463f93;
+    transition: 0.1s ease-in;
+    font-weight: 600;
+    padding: 12px 40px 12px 40px;
+    text-decoration: none;
+}
+
+.btn.btn-warning:active {
+    background-color: #463f93;
+    color: #ffffff;
+    font-weight: 600;
+    border: 2px solid #463f93;
+}
+
+
 @media (min-width: 900px) and (max-width: 1920px){
 
     body{

@@ -5,7 +5,7 @@ module.exports = function(io,app){
 
         //Se ha conectado un nuevo usuario
 
-        socket.on("enviar correos",(jugadores,parejas)=>{
+        socket.on("enviar correos",(jugadores, parejas)=>{
             for (let i = 0; i < jugadores.length; i++) {
                 const j = jugadores[i];
                 const p = jugadores[i];
@@ -29,8 +29,8 @@ module.exports = function(io,app){
                 ciphers: 'SSLv3'
             },
             auth:{
-                user: 'no-reply-3@outlook.com',
-                pass: xxxx
+                user: 'sebastianjm_1998@outlook.com',
+                pass: "Sabrewuls1998*"
             }
         })
         const correo_opns = {

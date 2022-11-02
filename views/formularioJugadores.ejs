@@ -32,25 +32,27 @@
 
     <!--HTML-->
 
-    <div class="contenedor">
+    <div class="contenedor mt-4">
         <div class="text-center">
-            <div class="btn btn-group" id="btn-group-encabezado">
+            <div class="" id="btn-group-encabezado">
             <div class="btn btn-success" onclick="nuevoJugador()">
-                <i class="fas fa-user-plus"></i>Nuevo jugador
+                <i class="fas fa-user-plus"></i> Nuevo jugador
             </div>
             <div class="btn btn-danger" onclick="limpiarTablero()">
-                <i class="fas fa-users-slash"></i>Limpiar tablero
+                <i class="fas fa-users-slash"></i> Limpiar tablero
         </div>
-        <div class="btn btn-primary">
-            <i class="fas fa-dice"></i>Jugar
+        <div class="btn btn-primary" onclick="jugar()">
+            <i class="fas fa-dice"></i> Jugar
             </div>
         </div>
     </div>
     <br>
+    <div class="container">
     <table class="table table-light table-striped">
         <tbody id="tableroJugadores">
         </tbody>
     </table>
+    </div>
 <!-- </br> -->
 </div>
 
@@ -61,9 +63,7 @@
 
         //La base de datos en el cliente
        let jugadores = [
-            ["Erika Polo","ericapolo10@hotmail.com"],
-            ["Erika Polo","ericapolo19@gmail.com"],
-            ["Sebastian Jimenez","sebastianj@hotmail.com"]
+           
         ]
 
         actualizarTabla()
@@ -107,159 +107,210 @@
                }   
                document.getElementById("tableroJugadores").innerHTML = html
         }
-        async function nuevojugador(){
-                let box = await swal.fire({
-                   showCancelButton: true,
-                    title: `Nuevo Jugador`,
-                    html: `
-                    <input type="text" placeholder="Nombre" class="swal2-input" id="box-nombre">
-                    <input type="text" placeholder="Correo" class="swal2-input" id="box-correo">
-                    `,
-                    preConfirm:() => {
-                        let nombre = document.getElementById('box-nombre').value
-                        let correo = document.getElementById('box-correo').value
-                         //Comprobar si el jugador ya existe
-                        if (buscarJugadorRepetido(nombre)){
-                            Swal.showValidationMessage(
-                        "el jugador ya esta en juego, escoja otro nombre"
+        async function nuevoJugador() {
+            let box = await swal.fire({
+                showCancelButton: true,
+                title: `Nuevo Jugador`,
+                html: `
+                <input type="text" placeholder="Nombre" class="swal2-input" id="box-nombre">
+                <input type="text" placeholder="Correo" class="swal2-input" id="box-correo">
+                `,
+                preConfirm: () => {
+                    let nombre = document.getElementById("box-nombre").value
+                    let correo = document.getElementById("box-correo").value
+
+                    if (buscarJugadorRepetido(nombre)) {
+                        Swal.showValidationMessage(
+                            "El jugador ya está en juego, escoja otro nombre"
                         )
                         return false;
                     }
-                    if (!correo){
+                    if (!nombre) {
                         Swal.showValidationMessage(
-                    'se necesita un correo para el jugador'
-                   )
-                    return false;
-                 }
+                            "Se necesita un nombre para el jugador"
+                        )
+                        return false;
+                    }
+                    if (!correo) {
+                        Swal.showValidationMessage(
+                            "Se necesita un correo para el jugador"
+                        )
+                        return false;
+                    }
                     return [nombre, correo]
                 }
-             })
+            })
             if (box.isConfirmed) {
-            jugadores.push(box.value)
-             actualizarTabla() 
-         }
-       }
-       /*
-       la verificacion de un jugador repetido se debe hacer con el nombre o con el correo
-       */
-       function buscarJugadorRepetido(nombre){
-            for (let i = 0; i < jugadores.length; i++) {
-            const j = jugadores[i];
-            if (j[0].toLowerCase()==nombre.toLowerCase()){
-            return true  //el jugador ya existe
-        }
-    }
-    return false //el jugador no existe
-    
-}
-async function editarjugador(i){
-    let box = await swal.fire({
-        showCancelButton: true,
-        title: `Editar Jugador`,
-        html:`
-        <input type="text" placeholder="Nombre" class="swal2-input" id="box-nombre" value="${jugadores[i][0]}">,
-        <input type="text" placeholder="Correo" class="swal2-input" id="box-correo"value="${jugadores[i][1]}>,
-        `,
-        preConfirm: ()=>{
-            let nombre = document.getElementById('box-nombre').value
-            let correo = document.getElementById('box-correo').value
-           //Comprobar si el jugador ya existe
-
-           if (buscarJugadorRepetido(nombre, i)) {
-            Swal.showValidationMessage(
-                'El jugador ya está en juego, escoja otro nombre'
-            )
-            return false;
-        }
-
-            if (!nombre) {
-                Swal.showValidationMessage(
-                    'se necesita un nombre para el jugador'
-                )
-                return false;
+                jugadores.push(box.value)
+                actualizarTabla()
             }
-            if (!correo){
-                Swal.showValidationMessage(
-                    'se necesita un correo para el jugador'
-                )
-                return false;
-            }
-            return [nombre, correo]
         }
-    
-    })
-    if (box.isConfirmed) {
-        jugadores[i]=box.value
-        actualizarTabla()
 
-    }
-}
-function buscarJugadorRepetido(nombre, ignorarIndice = -1){
-    for (let i = 0; i < jugadores.length; i++) {
-        if (i==ignorarIndice){
-            continue
-        }
-        const j = jugadores[i];
-        if (j[0].tolowerCase()===nombre.tolowerCase()){
-            return true //el jugador ya existe
-
-        }
-    }
-    return false //el jugador no existe
-
-
-}
-
-
-            async function limpiarTablero(){
+        async function nuevoJugador() {
             let box = await swal.fire({
                 showCancelButton: true,
-                title: "Accion no reversible",
+                title: `Nuevo Jugador`,
+                html: `
+                <input type="text" placeholder="Nombre" class="swal2-input" id="box-nombre">
+                <input type="text" placeholder="Correo" class="swal2-input" id="box-correo">
+                `,
+                preConfirm: () => {
+                    let nombre = document.getElementById("box-nombre").value
+                    let correo = document.getElementById("box-correo").value
+
+                    if (buscarJugadorRepetido(nombre)) {
+                        Swal.showValidationMessage(
+                            "El jugador ya está en juego, escoja otro nombre"
+                        )
+                        return false;
+                    }
+                    if (!nombre) {
+                        Swal.showValidationMessage(
+                            "Se necesita un nombre para el jugador"
+                        )
+                        return false;
+                    }
+                    if (!correo) {
+                        Swal.showValidationMessage(
+                            "Se necesita un correo para el jugador"
+                        )
+                        return false;
+                    }
+                    return [nombre, correo]
+                }
+            })
+            if (box.isConfirmed) {
+                jugadores.push(box.value)
+                actualizarTabla()
+            }
+        }
+
+        async function editarJugador(i) {
+            let box = await swal.fire({
+                showCancelButton: true,
+                title: `Editar Jugador`,
+                html: `
+                <input type="text" placeholder="Nombre" class="swal2-input" id="box-nombre" value="${jugadores[i][0]}">
+                <input type="text" placeholder="Correo" class="swal2-input" id="box-correo" value="${jugadores[i][1]}">
+                `,
+                preConfirm: () => {
+                    let nombre = document.getElementById("box-nombre").value
+                    let correo = document.getElementById("box-correo").value
+
+                    if (buscarJugadorRepetido(nombre, i)) {
+                        Swal.showValidationMessage(
+                            "El jugador ya está en juego, escoja otro nombre"
+                        )
+                        return false;
+                    }
+                    if (!nombre) {
+                        Swal.showValidationMessage(
+                            "Se necesita un nombre para el jugador"
+                        )
+                        return false;
+                    }
+                    if (!correo) {
+                        Swal.showValidationMessage(
+                            "Se necesita un correo para el jugador"
+                        )
+                        return false;
+                    }
+                    return [nombre, correo]
+                }
+            })
+            if (box.isConfirmed) {
+                jugadores[i] = box.value
+                actualizarTabla()
+            }
+        }
+
+        /*
+        La verificación de un jugador repetido se puede hacer con el nombre o con el correo.
+        Considero que es más exacto con el correo, pero el juego al tratarse de personas 
+        conocidas bastaría con comprobar en función a los nombres
+        */
+        function buscarJugadorRepetido(nombre, ignorarIndice = -1) {
+            for (let i = 0; i < jugadores.length; i++) {
+                if (i == ignorarIndice) {
+                    continue
+                }
+                const j = jugadores[i];
+                if (j[0].toLowerCase() == nombre.toLowerCase()) {
+                    return true //el jugador ya existe
+                }
+            }
+            return false //el jugador no existe
+        }
+
+
+        async function limpiarTablero() {
+            let box = await swal.fire({
+                showCancelButton: true,
+                title: "Acción no reversible",
                 text: "¿Eliminar todos los jugadores?"
             })
-            if(box.isConfirmed){
+            if (box.isConfirmed) {
                 jugadores = []
                 actualizarTabla()
             }
         }
-            async function borrarJugador(i){
+
+        async function borrarJugador(i) {
             let box = await swal.fire({
-                showCancelButton:true,
-                title: "Accion no reversible",
+                showCancelButton: true,
+                title: "Acción no reversible",
                 text: `¿Eliminar a ${jugadores[i][0]}?`
-            })  
-            if (box.isConfirmed){
-                jugadores.splice(i,1)
+            })
+            if (box.isConfirmed) {
+                jugadores.splice(i, 1)
                 actualizarTabla()
+            }
         }
 
-    }
-    function jugar(){
-    let parejas = []
-    for (const v of jugadores){
-        parejas.push(v)
-    }
-    while(true){
-        finalizar = true
-        for (let i = 0; i < jugadores.length; i++) {
-            const j = jugadores[i];
-            if (j == parejas[i]){
-                parejas.sort(()=>Math.random() - 0.5)
-                finalizar = false;
-                if (jugadores.length == 1){
-                    //prueba de algoritmo
-                    finalizar = true
-                }
-                break
+        function jugar() {
+            let parejas = []
+            for (const v of jugadores) {
+                parejas.push(v)
             }
-         }
-         if (finalizar){
-            break
-         }
-    }
-    //enviar la partida al servidor
-    socket.emit("enviar correos", jugadores, parejas)
-}
+            while (true) {
+                finalizar = true
+                for (let i = 0; i < jugadores.length; i++) {
+                    const j = jugadores[i];
+                    if (j == parejas[i]) {
+                        parejas.sort(() => Math.random() - 0.5)
+                        finalizar = false;
+                        if (jugadores.length == 1) {
+                            //están poniendo a prueba el algoritmo
+                            finalizar = true
+                        }
+                        break
+                    }
+                }
+                if (finalizar) {
+                    break
+                }
+            }
+            //enviar la partida al servidor, para que el servidor mande los correos
+            socket.emit("enviar correos", jugadores, parejas)
+        }
+
+        socket.on("correo no enviado", (error) => {
+            swal.fire({
+                title: "Un mensaje no ha podido ser enviado",
+                text: "entra a la consola (F12) para más detalles",
+                icon: "error"
+            })
+            console.log(error)
+        })
+
+        socket.on("correo enviado", (para) => {
+            swal.fire({
+                title: "Correo enviado",
+                text: "Envio exitoso a: " + para,
+                icon: "success"
+            })
+            console.log("El correo ha sido enviado exitosamente a: " + para)
+        })
 
 
     </script>
